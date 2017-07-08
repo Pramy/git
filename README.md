@@ -6,7 +6,7 @@
 - ```git status``` 查看库是否被修改。
 - ```git diff```可以查看修改内容
 
-##Summary:修改完成后最好用status来看一下修改了什么，然后再commit
+### Summary:修改完成后最好用status来看一下修改了什么，然后再commit
 
 # Session2
 ## **注意各种系统中的换行符号**
