@@ -61,16 +61,64 @@
 
 # 文件管理
 
-- 当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令`git checkout -- file`。
+- 当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令`git checkout -- [file-name]`。
   - 优先从staged恢复，然后到HEAD
-- 当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令`git reset HEAD file`，此时stage被修改再用上面的命令恢复work tree
-- 先在client创建ssh-key` ssh-keygen -t rsa -C "youremail@example.com"`，在服务器端(目前指的是github)添加ssh密钥，用于验证。
-- 关联仓库`git remote add origin git@server-name:path/repo-name.git`
-- 克隆远程仓库 `git clone git@server-name:path/repo-name.git`
+- 当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令`git reset HEAD [file-name]`，此时stage被修改再用上面的命令恢复work tree
+
+  ​
 
 # 分支管理
 
-- 推送本地分支`git push -u origin [client_branch1...]` ,第一次push最好添加参数-u，**client_branch**不填的话默认当前分区,推送所有client_branch后面参数直接改成--all就可以
+  ## 1.创建,合并与删除
+
+  - `git branch [branch-name]`创建分区，`git checkout [branch-name]`切换分区，` git branch` 查看分支 ， `git checkout -b [branch-name]`创建分区并且切换
+  - `git branch -d [branch-name]` 删除本地分支，把-d改为-D就是强行删除
+  - `git merge [branch-name]  ` 合并分支**[branch-name]** 到当前分支
+  - `git log --graph`命令可以看到分支合并图。
+  ## 2.推送
+  - 推送本地分支`git push -u origin [client_branch1...]` ,第一次push最好添加参 数-u，**client_branch**不填的话默认当前分区,推送所有client_branch后面参数直接改成**--all **就可以
 
 
-- `git branch branch-name`创建分区，`git checkout branch-name`切换分区，`git checkout -b branch-name`创建分区并且切换
+  ## 3.Bug分支
+![4](image/4.png)
+- `git stash` 储存当前分支工作区的文件，以上的save命令是`git stash`保存进度的完整命令形式
+
+  - `-k`和`--no-keep-index`指定保存进度后，是否重置暂存区
+  - `--patch` 会显示工作区和`HEAD`的差异,通过编辑差异文件，排除不需要保存的内容
+
+- `git stash list `列出所有保存的进度列表。
+
+- `git stash [pop | apply] [--index][<stash>]` 恢复工作进度，ex:`git stash pop --index stash@{0}`
+
+  - **pop**和**apply**的区别就是pop会在恢复后删除存储的进度，而apply不会。
+  - 用apply恢复后想删除用`git stash drop`来删除
+
+- `git stash clear` 删除所有进度
+
+  ## stash是一个栈空间，每一次save都是进栈，遵循FILO，每一次save都是一次进栈，pop相当于出栈
+
+  ### BUG修复思想：save->checkout -b->fix(commit)->checkout(master)->merge->delete branch->pop
+
+
+
+
+
+# 远程管理
+
+- 先在client创建ssh-key` ssh-keygen -t rsa -C "[youremail@example.com]"`，在服务器端(目前指的是github)添加ssh密钥，用于验证。
+- 关联仓库`git remote add origin git@[server-name]:[path][repo-name.git]`
+- 克隆远程仓库 `git clone git@[server-name]:[path]/[repo-name.git]` 默认clone所有的分支，但是工作空间只显示master分支的内容
+  - `git clone -b [origin-branch] [path]` 克隆指定分支
+  - 如果是关联过了，就可以用`git checkout -b [branch-name] [origin/branch]`
+- `git push origin --d [branch-name]` 删除远程分支
+- 查看远程库信息，使用`git remote -v`
+- 从本地推送分支，使用`git push origin branch-name`，如果推送失败，先用`git pull`抓取远程的新提交；pull会尝试合并本地的代码，如果用冲突就解决冲突，重新commit，push
+- 建立本地分支和远程分支的关联，使用`git branch --set-upstream branch-name origin/branch-name`；
+- 从远程抓取分支，使用`git pull`，如果有冲突，要先处理冲突。
+
+# 标签
+
+- 命令`git tag <name>`用于新建一个标签，默认为`HEAD`，也可以指定一个commit id；
+- `git tag -a <tagname> -m "blablabla..."`可以指定标签信息；
+- `git tag -s <tagname> -m "blablabla..."`可以用PGP签名标签；
+- 命令`git tag`可以查看所有标签
