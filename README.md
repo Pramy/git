@@ -95,10 +95,10 @@
 
 - `git stash clear` 删除所有进度
 
-  ## stash是一个栈空间，每一次save都是进栈，遵循FILO，每一次save都是一次进栈，pop相当于出栈
+  ## stash是一个栈空间，每一次`save`都是进栈，遵循FILO，每一次save都是一次进栈，pop相当于出栈
 
   ### BUG修复思想：save->checkout -b->fix(commit)->checkout(master)->merge->delete branch->pop
-
+  ## 4.Feature分支
 
 
 
