@@ -68,7 +68,7 @@
 - 关联仓库`git remote add origin git@server-name:path/repo-name.git`
 - 克隆远程仓库 `git clone git@server-name:path/repo-name.git`
 
-#分支管理
+# 分支管理
 
 - 推送本地分支`git push -u origin [client_branch1...]` ,第一次push最好添加参数-u，**client_branch**不填的话默认当前分区,推送所有client_branch后面参数直接改成--all就可以
 
