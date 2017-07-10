@@ -53,11 +53,24 @@
 
    ![image](image/1.png)
 
-### Session 3
 
 - 工作空间下面有个隐藏的.git的文件夹（版本库），当你初始化工作空间的时候会默认生成一个master的分支以及一个指向master的HEAD的指针，版本库里面有一个缓冲区  
 
-- ​
 
-   ​
 
+
+# 文件管理
+
+- 当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令`git checkout -- file`。
+  - 优先从staged恢复，然后到HEAD
+- 当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令`git reset HEAD file`，此时stage被修改再用上面的命令恢复work tree
+- 先在client创建ssh-key` ssh-keygen -t rsa -C "youremail@example.com"`，在服务器端(目前指的是github)添加ssh密钥，用于验证。
+- 关联仓库`git remote add origin git@server-name:path/repo-name.git`
+- 克隆远程仓库 `git clone git@server-name:path/repo-name.git`
+
+#分支管理
+
+- 推送本地分支`git push -u origin [client_branch1...]` ,第一次push最好添加参数-u，**client_branch**不填的话默认当前分区,推送所有client_branch后面参数直接改成--all就可以
+
+
+- `git branch branch-name`创建分区，`git checkout branch-name`切换分区，`git checkout -b branch-name`创建分区并且切换
